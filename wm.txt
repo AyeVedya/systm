@@ -1,4 +1,4 @@
-# #PRACTICAL 01 - PAGE RANK WITHOUT WEIGHTED EDGES
+#PRACTICAL 01 - PAGE RANK WITHOUT WEIGHTED EDGES
 
 pip install networkx
 import networkx as nx
@@ -9,7 +9,7 @@ ppr1 = nx.pagerank(G)
 pos = nx.spiral_layout(G)
 nx.draw(G, pos, with_labels = True, node_color = 'Yellow')
 
-# PAGE RANK USING NETWORKX
+#PRACTICAL 02 - PAGE RANK USING NETWORKX
 
 import networkx as nx
 import pylab as plt
@@ -94,9 +94,10 @@ if __name__ == "__main__":
     local_search_crawler.crawl(seed_url)
 
 
-PRACTICAL 06 - OPINION SEARCH AND RETRIEVAL
+#PRACTICAL 06 - OPINION SEARCH AND RETRIEVAL
 
 import nltk
+nltk.download('vader_lexicon')
 from nltk.sentiment import SentimentIntensityAnalyzer
 #Sample opinions
 opinions={
@@ -108,31 +109,32 @@ opinions={
 def analyze_sentiment(text):
     sia=SentimentIntensityAnalyzer()
     sentiment_score=sia.polarity_scores(text)['compound']
-    
+
     if sentiment_score>=0.05:
         return "positive"
     elif sentiment_score<=0.05:
         return "negative"
     else:
         return "neutral"
+
+def retrieve_opinions(sentiment):
+    matching_opinions=[opinion for opinion in opinions if analyze_sentiment(opinion) == sentiment]
+    return matching_opinions
+
+if __name__ == "__main__":
+    #Exmapl:Retrieve positive opinions
+    positive_opinions=retrieve_opinions("positvie")
     
-    def retrieve_opinions(sentiment):
-        matching_opinions=[opinion for opinion in opinions if analyze_sentiment(opinion) == sentiment]
-        return matching_opinions
+    print("Positvie opinions")
+    for opinion in positive_opinions:
+        print(f" -{opinion}")
     
-    if __name__ == "__main__":
-        #Exmapl:Retrieve positive opinions
-        positive_opinions=retrieve_opinions("positvie")
-        
-        print("Positvie opinions")
-        for opinion in positive_opinions:
-            print(f" -{opinion}")
-        
-        negative_opinions=retrieve_opinions("negative")
-        
-        print ("\nNegative opinions")
-        for opinion in negative_opinions:
-            print(f" -{opinion}")
+    negative_opinions=retrieve_opinions("negative")
+    
+    print ("\nNegative opinions")
+    for opinion in negative_opinions:
+        print(f" -{opinion}")
+
 
 PRACTICAL 07 - SENTIMENT ANALYSIS
 
